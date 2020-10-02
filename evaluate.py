@@ -31,8 +31,8 @@ def evaluate(model_path, imgs_path, input_shape, out_path):
         img = imread(os.path.join(imgs_path, _), mode='RGB')
         img_shape = img.shape
         input_data = img.astype('float32')
-        input_data = imresize(img, input_shape)
         inp_data = input_data
+        input_data = imresize(img, input_shape)
         input_data = input_data / 255.
         input_data = (input_data - input_data.mean()) / input_data.std()
         input_data = np.expand_dims(input_data, axis=0)
@@ -41,7 +41,10 @@ def evaluate(model_path, imgs_path, input_shape, out_path):
 
         mask = cv2.resize(output[0,:,:,0], (img_shape[1], img_shape[0]), interpolation=cv2.INTER_LINEAR)
         mask = np.array(mask, dtype='uint8')
+        inp_data = np.array(inp_data, dtype='uint8')
+        print(mask.shape," ",inp_data.shape)
         res = cv2.bitwise_and(inp_data,inp_data,mask = mask)
+        
         # img_with_mask = blend_img_with_mask(img, mask, img_shape)
         imsave(out_path + _, res)
 
