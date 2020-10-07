@@ -44,7 +44,7 @@ def evaluate(model_path, imgs_path, input_shape, out_path):
         inp_data = np.array(inp_data, dtype='uint8')
         print(mask.shape," ",inp_data.shape)
         res = cv2.bitwise_and(inp_data,inp_data,mask = mask)
-        
+        res[mask==0] = 255
         # img_with_mask = blend_img_with_mask(img, mask, img_shape)
         imsave(out_path + _, res)
 
